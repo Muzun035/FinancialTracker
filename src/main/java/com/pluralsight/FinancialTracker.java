@@ -1,10 +1,13 @@
 package com.pluralsight;
 
+import java.io.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
-
 public class FinancialTracker {
 
     private static ArrayList<Transaction> transactions = new ArrayList<Transaction>();
@@ -52,6 +55,33 @@ public class FinancialTracker {
     }
 
     public static void loadTransactions(String fileName) {
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] details = line.split("\\|");
+                LocalDate date = LocalDate.parse(details[0].trim(), DATE_FORMATTER);
+                LocalTime time = LocalTime.parse(details[1].trim(), TIME_FORMATTER);
+                String description = details[2].trim();
+                String vendor = details[3].trim();
+                double amount = Double.parseDouble(details[4].trim());
+                transactions.add(new Transaction(date, time, description, vendor, amount));
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found, starting fresh.");
+        } catch (IOException e) {
+            System.out.println("Error reading the file.");
+        }
+    }
+    private static void saveTransactions() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_NAME))) {
+            for (Transaction transaction : transactions) {
+                bw.write(transaction.toString());
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Error writing to the file.");
+        }
+    }
         // This method should load transactions from a file with the given file name.
         // If the file does not exist, it should be created.
         // The transactions should be stored in the `transactions` ArrayList.
@@ -60,7 +90,6 @@ public class FinancialTracker {
         // For example: 2023-04-15|10:13:25|ergonomic keyboard|Amazon|-89.50
         // After reading all the transactions, the file should be closed.
         // If any errors occur, an appropriate error message should be displayed.
-    }
 
     private static void addDeposit(Scanner scanner) {
         // This method should prompt the user to enter the date, time, description, vendor, and amount of a deposit.
@@ -73,7 +102,7 @@ public class FinancialTracker {
     private static void addPayment(Scanner scanner) {
         // This method should prompt the user to enter the date, time, description, vendor, and amount of a payment.
         // The user should enter the date and time in the following format: yyyy-MM-dd HH:mm:ss
-        // The amount received should be a positive number then transformed to a negative number.
+        // The amount received should be a positive number than transformed to a negative number.
         // After validating the input, a new `Transaction` object should be created with the entered values.
         // The new payment should be added to the `transactions` ArrayList.
     }
