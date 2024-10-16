@@ -181,16 +181,32 @@ public class FinancialTracker {
     }
 
     private static void displayLedger() {
+        System.out.println("Date | Time | Description | Vendor | Amount");
+        for (Transaction transaction : transactions) {
+            System.out.println(transaction);
+        }
         // This method should display a table of all transactions in the `transactions` ArrayList.
         // The table should have columns for date, time, description, vendor, and amount.
     }
 
     private static void displayDeposits() {
+        System.out.println("Date | Time | Description | Vendor | Amount");
+        for (Transaction transaction : transactions) {
+            if (transaction.getAmount() > 0) {
+                System.out.println(transaction);
+            }
+        }
         // This method should display a table of all deposits in the `transactions` ArrayList.
         // The table should have columns for date, time, description, vendor, and amount.
     }
 
     private static void displayPayments() {
+        System.out.println("Date | Time | Description | Vendor | Amount");
+        for (Transaction transaction : transactions) {
+            if (transaction.getAmount() < 0) {
+                System.out.println(transaction);
+            }
+        }
         // This method should display a table of all payments in the `transactions` ArrayList.
         // The table should have columns for date, time, description, vendor, and amount.
     }
