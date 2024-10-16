@@ -92,6 +92,25 @@ public class FinancialTracker {
         // If any errors occur, an appropriate error message should be displayed.
 
     private static void addDeposit(Scanner scanner) {
+        System.out.println("Enter date (yyyy-MM-dd): ");
+        LocalDate date = LocalDate.parse(scanner.nextLine().trim(), DATE_FORMATTER);
+        System.out.println("Enter time (HH:mm:ss): ");
+        LocalTime time = LocalTime.parse(scanner.nextLine().trim(), TIME_FORMATTER);
+        System.out.println("Enter description: ");
+        String description = scanner.nextLine().trim();
+        System.out.println("Enter vendor: ");
+        String vendor = scanner.nextLine().trim();
+        System.out.println("Enter amount (positive number): ");
+        double amount = Double.parseDouble(scanner.nextLine().trim());
+
+        Transaction deposit = new Transaction(date, time, description, vendor, amount);
+        transactions.add(deposit);
+
+        // Save the transaction to the CSV file
+        saveTransactions();
+
+        System.out.println("Deposit added successfully.");
+        
         // This method should prompt the user to enter the date, time, description, vendor, and amount of a deposit.
         // The user should enter the date and time in the following format: yyyy-MM-dd HH:mm:ss
         // The amount should be a positive number.
