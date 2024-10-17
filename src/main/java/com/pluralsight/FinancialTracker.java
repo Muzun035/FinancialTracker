@@ -61,7 +61,8 @@ public class FinancialTracker {
 
     // load existing transactions from the csv file
     public static void loadTransactions(String fileName) {
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+        //attempt to load transactions from the file if it exists
+         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] details = line.split("\\|");
@@ -72,15 +73,25 @@ public class FinancialTracker {
                 double amount = Double.parseDouble(details[4].trim());
                 transactions.add(new Transaction(date, time, description, vendor, amount)); // add to the list
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found, starting fresh.");
+        } catch (FileNotFoundException e) { //save all transactions to the csv file
+            System.out.println("File not found, starting fresh. Creating new file: "+ fileName);
+            try  (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_NAME))) {
+                for (Transaction transaction : transactions) {
+                    bw.write("Date | Time | Description | Vendor | Amount");
+                    bw.newLine(); // Ensure the header is followed by a newline
+                    bw.write(transaction.toString()); //writing each transaction to the file
+                    bw.newLine();
+                }
+            } catch (IOException ioException) {
+                System.out.println("Error creating new file: " + ioException.getMessage());
+            }
         } catch (IOException e) {
             System.out.println("Error reading the file.");
         }
     }
 
-    //save all transactions to the csv file
-    private static void saveTransactions() {
+
+/* private static void saveTransactions() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_NAME))) {
             for (Transaction transaction : transactions) {
                 bw.write(transaction.toString()); //writing each transaction to the file
@@ -89,7 +100,7 @@ public class FinancialTracker {
         } catch (IOException e) {
             System.out.println("Error writing to the file.");
         }
-    }
+    }*/
         // This method should load transactions from a file with the given file name.
         // If the file does not exist, it should be created.
         // The transactions should be stored in the `transactions` ArrayList.
