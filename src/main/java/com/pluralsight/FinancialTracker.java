@@ -315,10 +315,18 @@ public class FinancialTracker {
 
     private static void filterTransactionsByVendor(String vendor) {
         System.out.println("Date | Time | Description | Vendor | Amount");
+        boolean found = false; // Track if any transactions are found
+
         for (Transaction transaction : transactions) {
+            // Check if the transaction's vendor matches the input
             if (transaction.getVendor().equalsIgnoreCase(vendor)) {
                 System.out.println(transaction);
+                found = true; // At least one transaction is found
             }
+        }
+        // If no transactions match the vendor, print a message
+        if (!found) {
+            System.out.println("No results found for vendor: " + vendor);
         }
         // This method filters the transactions by vendor and prints a report to the console.
         // It takes one parameter: vendor, which represents the name of the vendor to filter by.
