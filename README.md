@@ -42,11 +42,11 @@ Here are some screenshots of the application in action:
 
 ### Home Screen
 
-![Home Screen](C:\Users\Student\Desktop\pluralsight\capstones\FinancialTracer\home.gif)
+![Home Screen](home.gif)
 
 ### Ledger Screen
 
-![Ledger Screen](C:\Users\Student\Desktop\pluralsight\capstones\FinancialTracer\ledger.gif)
+![Ledger Screen](ledger.gif)
 
 ## Features
 
