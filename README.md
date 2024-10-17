@@ -4,8 +4,6 @@
 
 The Financial Tracker is a simple Java console application that allows users to track their financial transactions, including deposits, payments, and generate various reports. Users can record transactions with relevant details such as date, time, description, vendor, and amount. All data is stored in a `transactions.csv` file, which ensures persistence across sessions. This application can be used for personal finance or small business purposes.
 
-![Class Diagram](C:\Users\Student\Desktop\pluralsight\capstones\FinancialTracer\class diagram.drawio)
-
 ## User Stories
 
 - As a user, I want to input my deposits and payments, so that I can keep track of my finances.
