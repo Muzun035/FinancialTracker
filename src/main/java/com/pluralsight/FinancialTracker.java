@@ -290,12 +290,22 @@ public class FinancialTracker {
 
     private static void filterTransactionsByDate(LocalDate startDate, LocalDate endDate) {
         System.out.println("Date | Time | Description | Vendor | Amount");
+        boolean found = false; // Track if any transactions are found
+
         for (Transaction transaction : transactions) {
             //check if the transaction date falls within the start and end dates
             if (!transaction.getDate().isBefore(startDate) && !transaction.getDate().isAfter(endDate)) {
                 System.out.println(transaction); //print matching transactions
+                found = true; // At least one transaction is found
             }
         }
+
+        // If no transactions match the date range, print a message
+        if (!found) {
+            System.out.println("No results found for the specified date range.");
+        }
+
+
         // This method filters the transactions by date and prints a report to the console.
         // It takes two parameters: startDate and endDate, which represent the range of dates to filter by.
         // The method loops through the transactions list and checks each transaction's date against the date range.
