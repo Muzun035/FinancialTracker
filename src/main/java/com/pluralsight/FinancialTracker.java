@@ -12,13 +12,14 @@ public class FinancialTracker {
     // Lists store transactions
     private static ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 
-    // csv file to store data
+    //File name and format constants
     private static final String FILE_NAME = "transactions.csv";
     private static final String DATE_FORMAT = "yyyy-MM-dd";
     private static final String TIME_FORMAT = "HH:mm:ss";
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(DATE_FORMAT);
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern(TIME_FORMAT);
 
+// Main method to start the program
     public static void main(String[] args) {
         //to load existing transactions from the csv file
         loadTransactions(FILE_NAME);
@@ -27,6 +28,7 @@ public class FinancialTracker {
 
         //main program loop
         while (running) {
+      // Display main menu
             System.out.println("Welcome to TransactionApp");
             System.out.println("Choose an option:");
             System.out.println("D) Add Deposit");
@@ -39,7 +41,7 @@ public class FinancialTracker {
             //handle user input to select a feature
             switch (input.toUpperCase()) {
                 case "D":
-                    addDeposit(scanner);
+                    addDeposit(scanner);// call methods
                     break;
                 case "P":
                     addPayment(scanner);
@@ -73,12 +75,12 @@ public class FinancialTracker {
                 double amount = Double.parseDouble(details[4].trim());
                 transactions.add(new Transaction(date, time, description, vendor, amount)); // add to the list
             }
-        } catch (FileNotFoundException e) { //save all transactions to the csv file
+        } catch (FileNotFoundException e) { //If the file is not found, create a new one
             System.out.println("File not found, starting fresh. Creating new file: "+ fileName);
             try  (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_NAME))) {
                 for (Transaction transaction : transactions) {
                     bw.write("Date | Time | Description | Vendor | Amount");
-                    bw.newLine(); // Ensure the header is followed by a newline
+                    bw.newLine(); // the header is followed by a newline
                     bw.write(transaction.toString()); //writing each transaction to the file
                     bw.newLine();
                 }
