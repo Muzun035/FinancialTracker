@@ -90,17 +90,6 @@ public class FinancialTracker {
         }
     }
 
-
-/* private static void saveTransactions() {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_NAME))) {
-            for (Transaction transaction : transactions) {
-                bw.write(transaction.toString()); //writing each transaction to the file
-                bw.newLine();
-            }
-        } catch (IOException e) {
-            System.out.println("Error writing to the file.");
-        }
-    }*/
         // This method should load transactions from a file with the given file name.
         // If the file does not exist, it should be created.
         // The transactions should be stored in the `transactions` ArrayList.
@@ -349,7 +338,7 @@ public class FinancialTracker {
     private static void filterByMonth(LocalDate date) {
         YearMonth currentMonth = YearMonth.of(date.getYear(), date.getMonth());
         LocalDate start = currentMonth.atDay(1);
-        LocalDate end = currentMonth.atEndOfMonth();
+        LocalDate end =LocalDate.now();
         filterTransactionsByDate(start, end); // calling filter to display transactions
     }
 
@@ -362,7 +351,7 @@ public class FinancialTracker {
 
     private static void filterByYear(int year) {
         LocalDate start = LocalDate.of(year, 1, 1);
-        LocalDate end = LocalDate.of(year, 12, 31);
+        LocalDate end = LocalDate.now();
         filterTransactionsByDate(start, end);
     }
     // performing a custom search based on multiple criteria (date, description, vendor, and amount)
